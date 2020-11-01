@@ -8,7 +8,7 @@ import product
 import csv_control
 
 regex_money_input = re.compile('^\$(?!0,?\d)([0-9]{1}[0-9]{0,}(\.[0-9]{2}))')
-regex_date_input = re.compile('^(0?[1-9]|1[012])/([012][0-9]|[1-9]|3[01])/([12][0-9]{3})$')
+#regex_date_input = re.compile('^(0?[1-9]|1[012])/([012][0-9]|[1-9]|3[01])/([12][0-9]{3})$')
 
 def main():
     # Initialize product database
@@ -141,7 +141,8 @@ def view_product():
 
 def backup_database():
     """ Backup the store inventory """
-    pass
+    csv_control.create_csv_backup(product.get_all_headers(), product.get_all_products())
+    user_input = input("Press enter to continue.")
 
 # Define menu options
 menu = OrderedDict([

@@ -67,3 +67,17 @@ def view_product(product_id):
     else:
         product_get = Product.select()
         print("Sorry that selection is not valid. Please try a number within range 1 - {}.".format(len(product_get)))
+
+def get_all_products():
+    """
+    returns all products from the products table
+    """
+    return Product.select()
+
+def get_all_headers():
+    """
+    returns all headers from the products table
+    """
+    columns = db.get_columns('product')
+
+    return columns

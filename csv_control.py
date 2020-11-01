@@ -28,9 +28,27 @@ def read_file():
 
     return database_products
 
+def create_csv_backup(headers, products):
+    """
+    creates a backup of the products to a csv file
+    """
+
+    with open('backup.csv', 'w', newline='') as csvfile:
+
+        backupwriter = csv.writer(csvfile, delimiter=',')
+        header_array = []
+
+        for each_header in headers:
+            header_array.append(each_header.name)
+
+        backupwriter.writerow(header_array)
+        
+        for each_product in products:
+            backupwriter.writerow([each_product.product_id, each_product.product_name, each_product.product_price, each_product.product_qty, each_product.date_updated])
+
 def fix_price(entry_price):
     """
-    docstring
+    fix the price of the item to be an intenger in cents
     """
     try:
         fixed_price = float(entry_price[1:])
@@ -40,7 +58,7 @@ def fix_price(entry_price):
     
 def fix_date(entry_date):
     """
-    docstring
+    fix the date to be able to loaded into the database
     """
     modified_date_format = datetime.datetime.strptime(entry_date,"%m/%d/%Y").strftime('%Y-%m-%d %H:%M:%S')
     return datetime.datetime.strptime(modified_date_format,'%Y-%m-%d %H:%M:%S')
