@@ -37,6 +37,7 @@ def add_product(inventory_product):
     
     try:
         Product.create(product_name=inventory_product['product_name'],product_qty=inventory_product['product_qty'],product_price=inventory_product['product_price'],date_updated=inventory_product['date_updated'])
+        print("The product {} was added to the database.".format(inventory_product['product_name']))
     except IntegrityError:
 
         # If integrityError occurs, get the product from database and compare which information is newer. 
@@ -45,6 +46,7 @@ def add_product(inventory_product):
         product_get = Product.select().where(Product.product_name == inventory_product['product_name'])
         if product_get[0].date_updated < inventory_product['date_updated']:
             Product.update(product_qty=inventory_product['product_qty'],product_price=inventory_product['product_price'],date_updated=inventory_product['date_updated']).where(Product.product_name == inventory_product['product_name']).execute()
+            print("The product '{}' was updated in the database.".format(inventory_product['product_name']))
 
 def view_product(product_id):
     """
@@ -72,12 +74,15 @@ def get_all_products():
     """
     returns all products from the products table
     """
+    
+    # call the database to get all products
     return Product.select()
 
 def get_all_headers():
     """
     returns all headers from the products table
     """
+    # call the database to get all headers
     columns = db.get_columns('product')
 
     return columns

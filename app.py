@@ -106,7 +106,7 @@ def add_product():
     user_product_updated_date = datetime.datetime.strptime(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
 
     temp_product = {
-        'product_name' : user_product_name,
+        'product_name' : user_product_name.lower(),
         'product_price' : user_product_price,
         'product_qty' : user_product_qty,
         'date_updated' : user_product_updated_date
@@ -141,8 +141,11 @@ def view_product():
 
 def backup_database():
     """ Backup the store inventory """
+
+    # call the product database to get headers and products and send the information to csv_control to create backup
     csv_control.create_csv_backup(product.get_all_headers(), product.get_all_products())
-    user_input = input("Press enter to continue.")
+    print('Backup was successful!')
+    input("Press enter to continue.")
 
 # Define menu options
 menu = OrderedDict([
